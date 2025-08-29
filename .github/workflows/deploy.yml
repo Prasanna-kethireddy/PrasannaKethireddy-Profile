@@ -37,42 +37,32 @@ jobs:
 
           name: Deploy My Folder
 
+
+
 on:
   push:
+    branches: [ main ]
     paths:
-      Prasanna-Profile   # trigger only when your folder changes
+      - "Prasanna-Profile**"   # 👈 replace with your actual folder name
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install deps
-        working-directory: my-folder
-        run: npm install
-
-      - name: Build project
-        working-directory: my-folder
-        run: npm run build
-
-      - name: Upload artifact
+      - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: my-folder/dist   # 👈 or your build output folder
+          path: Prasanna-Profile  # 👈 replace with your folder name (where index.html is)
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - uses: actions/deploy-pages@v4
-
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
