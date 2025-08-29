@@ -40,7 +40,7 @@ jobs:
 on:
   push:
     paths:
-      - "my-folder/**"   # trigger only when your folder changes
+      Prasanna-Profile   # trigger only when your folder changes
 
 jobs:
   build:
